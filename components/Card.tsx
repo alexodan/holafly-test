@@ -42,24 +42,32 @@ export function Card({
     <div className="flex flex-col items-start p-4 border rounded-lg">
       <div className="flex items-center space-x-2">
         <Badge variant="secondary">
-          <GlobeIcon /> <span className="ml-1">{country}</span>
+          <GlobeIcon /> <span className="ml-1">{status}</span>
         </Badge>
       </div>
       <div className="mt-2">
-        {status !== "Expired" ? (
+        <h3 className="text-lg font-semibold">{country}</h3>
+        {/* {status !== "Expired" ? (
           <span className="text-sm font-medium">{daysElapsed} days</span>
-        ) : (
+        ) : null} */}
+        {status === "Expired" ? (
           <span className="text-sm">
             {dateStart} - {dateEnd}
           </span>
-        )}
+        ) : null}
       </div>
       <div className="mt-2">
-        <h3 className="text-lg font-semibold">{country}</h3>
         <p className="text-sm text-muted-foreground">{plan}</p>
       </div>
+      {status === "Active" ? (
+        <Button
+          className={`bg-transparent border-black border w-full text-nowrap`}
+        >
+          View details
+        </Button>
+      ) : null}
       {status !== "Expired" ? (
-        <Button className={`${StatusOptions[status].color} text-nowrap`}>
+        <Button className={`${StatusOptions[status].color} text-nowrap w-full`}>
           {StatusOptions[status].message}
         </Button>
       ) : null}
