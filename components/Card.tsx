@@ -41,8 +41,9 @@ export function Card({
   return (
     <div className="flex flex-col items-start p-4 border rounded-lg">
       <div className="flex items-center space-x-2">
-        <Badge variant="secondary">{status}</Badge>
-        <ClockIcon className="text-muted-foreground" />
+        <Badge variant="secondary">
+          <GlobeIcon /> <span className="ml-1">{country}</span>
+        </Badge>
       </div>
       <div className="mt-2">
         {status !== "Expired" ? (
@@ -74,46 +75,6 @@ function Badge(props: any) {
     >
       {props.children}
     </span>
-  );
-}
-
-function ClockIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
-}
-
-function CloudLightningIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973" />
-      <path d="m13 12-3 5h4l-3 5" />
-    </svg>
   );
 }
 
