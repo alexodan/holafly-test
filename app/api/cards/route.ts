@@ -4,7 +4,7 @@ export type Card = {
   status: "Pending" | "Expired" | "Active";
   dateStart: string;
   dateEnd: string | null;
-  comsuption: { totalComsumption: number } | null;
+  comsumption: { totalComsumption: number } | null;
   flag: string;
   country: string;
   plan: string;
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
         status: "Expired",
         dateStart: "01/01/2023",
         dateEnd: "04/01/2023",
-        comsuption: null,
+        comsumption: null,
         flag: "", // URL de la imagen del country
         country: "Colombia",
         plan: "4 dias, 3GB",
@@ -29,7 +29,7 @@ export async function GET(request: Request) {
         status: "Expired",
         dateStart: "02/01/2023",
         dateEnd: "02/01/2023",
-        comsuption: null,
+        comsumption: null,
         flag: "",
         country: "Colombia",
         plan: "30 dias, 25GB",
@@ -38,7 +38,7 @@ export async function GET(request: Request) {
         status: "Pending",
         dateStart: "01/01/2024",
         dateEnd: null,
-        comsuption: {
+        comsumption: {
           totalComsumption: 1468006.4,
         },
         flag: "", // URL de la imagen del country
@@ -49,7 +49,7 @@ export async function GET(request: Request) {
         status: "Active",
         dateStart: "06/10/2023",
         dateEnd: "16/10/2023",
-        comsuption: {
+        comsumption: {
           totalComsumption: 12582912,
         },
         flag: "", // URL de la imagen del country

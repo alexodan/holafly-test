@@ -1,4 +1,5 @@
 import { SESSION_TIMEOUT, encrypt } from "@/auth/utils";
+import { supabase } from "@/db/client";
 import { cookies } from "next/headers";
 
 export type UserCredentials = {
@@ -9,22 +10,28 @@ export type UserCredentials = {
 export type User = {
   id: number;
   name: string;
-  userName: string;
+  email: string;
 };
 
 export async function fetchUser(
   credentials: UserCredentials
 ): Promise<User | null> {
-  // TODO: Connect to a DB
-  const user = {
-    id: 1,
-    name: "Rachel",
-    userName: "rachel_hudson",
-  };
+  const { data: user } = await supabase
+    .from("User")
+    .select("*")
+    .eq("email", credentials.email)
+    .single();
   if (!user) {
     return null;
   }
-  return user as User;
+  if (user.password !== credentials.password) {
+    return null;
+  }
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+  } as User;
 }
 
 export async function POST(request: Request) {
@@ -35,7 +42,7 @@ export async function POST(request: Request) {
       password: String(formData.get("password")),
     });
     if (!user) {
-      throw new Error("Invalid credentials");
+      throw Response.json({ error: "Credentials invalid" }, { status: 400 });
     }
     // Expires in 10 seconds
     const expires = new Date(Date.now() + SESSION_TIMEOUT * 1000);

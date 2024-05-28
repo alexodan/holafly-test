@@ -12,16 +12,16 @@ export default async function LoginPage() {
       <h1 className="text-4xl text-center mb-8">Sign in</h1>
       <form className="grid text-lg" action="/api/login" method="POST">
         <div>
-          <label className="block my-2" htmlFor="username">
-            Username
+          <label className="block my-2" htmlFor="email">
+            Email
           </label>
           <input
             className="border-b-2 border-gray-200 focus-visible:border-blue-400 focus-visible:outline-none"
-            id="username"
-            name="username"
-            autoComplete="username"
-            defaultValue="foo"
-            type="text"
+            id="email"
+            name="email"
+            autoComplete="email"
+            defaultValue="rachel@mail.com"
+            type="email"
           />
         </div>
         <div>
@@ -33,7 +33,7 @@ export default async function LoginPage() {
             id="password"
             name="password"
             type="password"
-            defaultValue="1234"
+            defaultValue="racheliscool"
             autoComplete="current-password"
           />
         </div>

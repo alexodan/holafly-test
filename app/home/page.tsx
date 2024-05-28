@@ -3,26 +3,32 @@ import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import Link from "next/link";
 import { Card as ICard } from "../api/cards/route";
+import { supabase } from "@/db/client";
 
-async function getCards() {
-  const res = await fetch("http://localhost:3001/api/cards", {
-    next: {
-      revalidate: 60, // every minute
-    },
-  });
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
+async function getCardsByUserId(userId?: number): Promise<ICard[] | undefined> {
+  if (!userId) {
+    return [];
   }
-
-  const { data } = await res.json();
-  return data as ICard[];
+  const response = await supabase
+    .from("Card")
+    .select("*")
+    .eq("user_id", userId);
+  return response?.data?.map((card) => ({
+    plan: card.plan ?? "",
+    country: card.country ?? "",
+    flag: card.flag ?? "",
+    status: card.status as "Pending" | "Expired" | "Active",
+    comsumption: {
+      totalComsumption: card.comsumption ?? 0,
+    },
+    dateEnd: card.date_end ?? "",
+    dateStart: card.date_start ?? "",
+  }));
 }
 
 export default async function HomePage() {
   const user = await getUser();
-  const cards = await getCards();
+  const cards = await getCardsByUserId(user?.id);
 
   if (!user) {
     return (
@@ -41,7 +47,7 @@ export default async function HomePage() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <h1 className="text-6xl font-bold">Welcome {user.name}!</h1>
       <div className="grid md:grid-cols-2 lg:grid-flow-col auto-cols-max gap-4 mt-16">
-        {cards.map((card, index) => (
+        {cards?.map((card, index) => (
           <Card key={index} {...card} />
         ))}
       </div>
