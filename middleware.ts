@@ -3,7 +3,6 @@ import { decrypt, encrypt } from "./auth/utils";
 import { SESSION_TIMEOUT } from "./auth/utils";
 
 async function updateSession(request: NextRequest) {
-  console.log("updating session");
   const currentUser = request.cookies.get("currentUser")?.value;
   if (!currentUser) {
     return;
