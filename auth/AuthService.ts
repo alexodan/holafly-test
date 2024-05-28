@@ -15,7 +15,7 @@ export class AuthService {
       .post("/login", { username, password })
       .then((response) => response.data);
     return {
-      id: 1,
+      id: response.id,
       name: response.name,
       userName: response.username,
     } as User;
