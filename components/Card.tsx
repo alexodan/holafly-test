@@ -1,11 +1,11 @@
 import { Button } from "./Button";
-import { parse } from "date-fns";
+import { format, parse, parseISO } from "date-fns";
 
 type CardProps = {
   status: "Active" | "Pending" | "Expired";
   dateStart: string;
   dateEnd: string | null;
-  comsuption: {
+  comsumption: {
     totalComsumption: number;
   } | null;
   flag: string;
@@ -28,18 +28,18 @@ export function Card({
   status,
   dateStart,
   dateEnd,
-  comsuption,
+  comsumption,
   flag,
   country,
   plan,
 }: CardProps) {
-  const start = parse(dateStart, "dd/MM/yyyy", new Date());
-  const end = dateEnd ? parse(dateEnd, "dd/MM/yyyy", new Date()) : null;
+  const start = parseISO(dateStart);
+  const end = dateEnd ? parseISO(dateEnd) : null;
   const daysElapsed =
     ((end ? end.getTime() : start.getTime()) - start.getTime()) /
     (60 * 60 * 24 * 1000);
   return (
-    <div className="flex flex-col items-start p-4 border rounded-lg">
+    <div className="flex flex-col items-start p-4 border rounded-lg max-w-80">
       <div className="flex items-center space-x-2">
         <Badge variant="secondary">
           <GlobeIcon /> <span className="ml-1">{status}</span>
@@ -47,12 +47,13 @@ export function Card({
       </div>
       <div className="mt-2">
         <h3 className="text-lg font-semibold">{country}</h3>
-        {/* {status !== "Expired" ? (
+        {status !== "Expired" ? (
           <span className="text-sm font-medium">{daysElapsed} days</span>
-        ) : null} */}
+        ) : null}
         {status === "Expired" ? (
           <span className="text-sm">
-            {dateStart} - {dateEnd}
+            {format(dateStart, "dd/MM/yyyy")} -{" "}
+            {dateEnd ? format(dateEnd, "dd/MM/yyyy") : "Today"}
           </span>
         ) : null}
       </div>
