@@ -13,9 +13,7 @@ export type User = {
   email: string;
 };
 
-export async function fetchUser(
-  credentials: UserCredentials
-): Promise<User | null> {
+async function fetchUser(credentials: UserCredentials): Promise<User | null> {
   const { data: user } = await supabase
     .from("User")
     .select("*")

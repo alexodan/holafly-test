@@ -17,7 +17,7 @@ export class AuthService {
     return {
       id: response.id,
       name: response.name,
-      userName: response.username,
+      email: response.email,
     } as User;
   }
 }
